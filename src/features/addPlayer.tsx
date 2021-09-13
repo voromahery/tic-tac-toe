@@ -27,6 +27,5 @@ export const addPlayerSlice = createSlice({
 export const { addPlayer, addNewPlayer} = addPlayerSlice.actions;
 
 export const newPlayer = (state: RootState) => state.addPlayer.value;
-export const addSecondPlayer = (state: RootState) => state.addPlayer.value;
 
 export default addPlayerSlice.reducer;

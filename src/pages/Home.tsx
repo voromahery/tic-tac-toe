@@ -5,10 +5,12 @@ import {useAppDispatch, useAppSelector} from '../app/hooks';
 import {start} from '../features/startScreenSlice'
 import { addNewPlayer, newPlayer } from "../features/addPlayer";
 import { newSecondPlayer, addSecondPlayer} from '../features/addSecondPlayer'
+import {addTimer, gameTimer} from '../features/timer'
 export default function Home(){
     const dispatch = useAppDispatch();
     const firstPlayer = useAppSelector(newPlayer);
     const secondPlayer = useAppSelector(newSecondPlayer)
+    const timer = useAppSelector(gameTimer)
     
     return(
     <div className="board">
@@ -22,9 +24,9 @@ export default function Home(){
         </div>
     <div className='time-limit'>
     <p>turn Time limit in seconds:</p>
-    <input type='number' name='time-limit' placeholder='3s'/>
+    <input type='number' name='time-limit'  value={timer} min={0} max={60} onChange={(e) => dispatch(addTimer(Number(e.target.value)))} placeholder='3s'/>
     </div>
-    <button className="start-button" onClick={() => dispatch(start())}>Start</button>
+    <button className="start-button restart" onClick={() => dispatch(start())}>Start</button>
 </div>
     )
 }

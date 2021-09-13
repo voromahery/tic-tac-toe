@@ -3,13 +3,15 @@ import counterReducer from '../features/counter/counterSlice';
 import startReducer from '../features/startScreenSlice'
 import addPlayerReducer from '../features/addPlayer'
 import secondPlayerReducer from '../features/addSecondPlayer'
+import timerReducer from '../features/timer'
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     start: startReducer,
     addPlayer: addPlayerReducer,
-    secondPlayer: secondPlayerReducer
+    secondPlayer: secondPlayerReducer,
+    timer: timerReducer
   },
 });
 

@@ -1,6 +1,9 @@
-import React from "react";
-import {useAppSelector} from '../app/hooks';
+import React, {useEffect, useState} from "react";
+import {useAppSelector, useAppDispatch} from '../app/hooks';
 import {newPlayer} from '../features/addPlayer'
+// import { newSecondPlayer} from '../features/addSecondPlayer'
+import {gameTimer} from '../features/timer'
+ import {start} from '../features/startScreenSlice'
 // 0 | 1 | 2
 // ---+---+---
 //  3 | 4 | 5
@@ -18,8 +21,23 @@ import {newPlayer} from '../features/addPlayer'
 //[6, 4, 2]
 //[0, 4, 8]
 export default function StartedGame(){
+    const dispatch = useAppDispatch();
     const firstPlayer = useAppSelector(newPlayer);
-    // const secondPlayer = useAppSelector(newPlayer);
+    // const secondPlayer = useAppSelector(newSecondPlayer);
+    const timer = useAppSelector(gameTimer)
+    const [countDown, setCountDown] = useState(timer)
+
+   useEffect(()=>{
+    let myInterval = setInterval(() => {
+            countDown > 0 && setCountDown(countDown - 1)
+        }, 1000)
+        
+        return ()=> {
+            clearInterval(myInterval);
+          };
+
+    },[countDown]);
+
     return(
 <div className='started-wrapper'>
     <p className='player-to-play'>{firstPlayer}’s turn</p>
@@ -38,7 +56,7 @@ export default function StartedGame(){
             <div data-cell-index="8" className="cell 8"></div>
             <div className="vertical-border right"></div>
         </div>
-        <p className='remaining-time'>time left: 2s</p>
+        {countDown > 0 ? <p className='remaining-time'>time left: {countDown}s</p> : <button onClick={() => dispatch(start())} className='start-button'>Restart</button>}
 </div>
     )
 }
