@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import startReducer from '../features/startScreen/startScreenSlice'
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    start: startReducer,
   },
 });
 
