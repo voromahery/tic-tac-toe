@@ -1,5 +1,6 @@
 import React from "react";
-
+import {useAppSelector} from '../app/hooks';
+import {newPlayer} from '../features/addPlayer'
 // 0 | 1 | 2
 // ---+---+---
 //  3 | 4 | 5
@@ -17,9 +18,11 @@ import React from "react";
 //[6, 4, 2]
 //[0, 4, 8]
 export default function StartedGame(){
+    const firstPlayer = useAppSelector(newPlayer);
+    // const secondPlayer = useAppSelector(newPlayer);
     return(
 <div className='started-wrapper'>
-    <p className='player-to-play'>Johnny’s turn</p>
+    <p className='player-to-play'>{firstPlayer}’s turn</p>
 <div className='board-container'>
             <div className="vertical-border left"></div>
             <div data-cell-index="0" className="cell 0"></div>

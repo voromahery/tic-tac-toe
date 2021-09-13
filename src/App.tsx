@@ -1,6 +1,6 @@
 import React from 'react';
 import {useAppSelector} from './app/hooks';
-import {startGame} from './features/startScreen/startScreenSlice'
+import {startGame} from './features/startScreenSlice'
 import Home from './pages/Home';
 import StartedGame from './pages/StartedGame';
 import './App.css';

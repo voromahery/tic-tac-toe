@@ -1,11 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
-import startReducer from '../features/startScreen/startScreenSlice'
+import startReducer from '../features/startScreenSlice'
+import addPlayerReducer from '../features/addPlayer'
+import secondPlayerReducer from '../features/addSecondPlayer'
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     start: startReducer,
+    addPlayer: addPlayerReducer,
+    secondPlayer: secondPlayerReducer
   },
 });
 
