@@ -1,39 +1,152 @@
-.App {
-  text-align: center;
+
+body {
+  font-family: "Usuazi Hosomozi", Arial, Helvetica, sans-serif;
+  background-color: #FFFFFF;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body,.start-button,.heading, .board-container {
+margin: auto;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
-  }
+.heading {
+  margin-bottom: 90px;
 }
 
-.App-header {
-  min-height: 100vh;
+button, .cell {
+  cursor: pointer;
+}
+
+.board, input {
+  font-size: 48px;
+}
+
+.start-button, .heading {
+  font-size: 72px;
+} 
+
+::placeholder{
+  font-size: 48px;
+  color: #8B8585
+}
+
+::-webkit-input-placeholder{
+  font-size: 48px;
+  color: #8B8585
+}
+
+::-moz-placeholder {
+  font-size: 48px;
+  color: #8B8585
+}
+
+.circle, .cross {
+  max-width: 74px;
+ }
+
+ .player-option {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 39px;
+  margin-top: 24.32px;
+  margin-bottom: 24.32px;
+ }
+
+ input {
+   max-height: 50px;
+   color: black;
+ }
+
+ p span {
+  color: #8B8585;
+ }
+
+.start-button, input {
+  border: none;
+  outline: none;
 }
 
-.App-link {
-  color: rgb(112, 76, 182);
+ input,.player-option,.start-button{
+   width: 100%;
+ }
+
+ .start-button,.heading {
+  max-width: max-content;
+  display: block;
+  background-color: #FFFFFF;
+ }
+
+ .time-limit p {
+  margin-bottom: 47px;
+  margin-top: 31.32px;
+ }
+
+ .board-container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 419.17px;
+ }
+
+ .cell {
+   display: block;
+   /* border: 1px solid #000000; */
+   height: 138px;
+   max-width: 138px;
+ }
+
+ .horizontal-border, .vertical-border {
+  display: block;
+  background-color: #4A4444;
+  position: absolute;
+  width: 454.17px;
+  max-width: calc(454.17px - 33px);
+  height: 4px;
+}
+ 
+.vertical-border {
+  transform: rotate(91.63deg);
 }
 
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
+.horizontal-border {
+  transform: rotate(180deg);
+  max-width: calc(100% - 33px);
 }
+
+.left, .right {
+  top: 50%;
+}
+
+
+.left {
+  right: 72px;
+}
+
+.right {
+  left: 72px
+}
+
+.top {
+  top: calc(50% - calc(139px / 2));
+}
+
+.down {
+  top: calc(50% + calc(139px / 2));
+  right: 0;
+}
+
+ /* .cell:nth-of-type(1),
+ .cell:nth-of-type(4), 
+ .cell:nth-of-type(7)  {
+  border-right: solid 1px #000000;
+ }
+
+ .cell:nth-of-type(3),
+ .cell:nth-of-type(6),
+ .cell:nth-of-type(9)  {
+  border-left: solid 1px #000000;
+ }
+
+ .cell:nth-of-type(5){
+  border-top: solid 1px #000000;
+  border-bottom: solid 1px #000000;
+ } */
