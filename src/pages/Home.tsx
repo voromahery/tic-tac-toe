@@ -21,7 +21,8 @@ export default function Home(){
             <input type="text" placeholder="leave empty to use AI or enter player name" value={secondPlayer} onChange={(e) => dispatch(addSecondPlayer(e.target.value))} name='second player name'/>
         </div>
     <div className='time-limit'>
-    <p>turn Time limit in seconds: <span>3s</span></p>
+    <p>turn Time limit in seconds:</p>
+    <input type='number' name='time-limit' placeholder='3s'/>
     </div>
     <button className="start-button" onClick={() => dispatch(start())}>Start</button>
 </div>

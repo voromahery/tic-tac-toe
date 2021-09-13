@@ -24,6 +24,11 @@ button, .cell {
   font-size: 72px;
 } 
 
+input::-webkit-inner-spin-button {
+  appearance: auto;
+  display: none;
+}
+
 ::placeholder{
   font-size: 48px;
   color: #8B8585
@@ -44,12 +49,19 @@ button, .cell {
  }
 
  .player-option {
-  display: flex;
-  align-items: center;
   gap: 39px;
   margin-top: 24.32px;
   margin-bottom: 24.32px;
  }
+
+.time-limit, .player-option{
+  display: flex;
+  align-items: center;
+}
+
+.time-limit input {
+  max-width: 80px;
+}
 
  input {
    max-height: 50px;
@@ -76,6 +88,11 @@ button, .cell {
  }
 
  .time-limit p {
+  margin: 0;
+ }
+
+ .time-limit{
+  gap: 16px;
   margin-bottom: 47px;
   margin-top: 31.32px;
  }
