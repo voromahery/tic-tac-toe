@@ -16,7 +16,7 @@ button, .cell {
   cursor: pointer;
 }
 
-.board, input {
+.board, input, .started-wrapper {
   font-size: 48px;
 }
 
@@ -79,6 +79,10 @@ button, .cell {
   margin-bottom: 47px;
   margin-top: 31.32px;
  }
+
+.started-wrapper {
+  text-align: center;
+}
 
  .board-container {
   position: relative;

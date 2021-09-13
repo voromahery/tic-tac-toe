@@ -8,7 +8,9 @@ import React from "react";
 
 export default function StartedGame(){
     return(
-        <div className='board-container'>
+<div className='started-wrapper'>
+    <p className='player-to-play'>Johnny’s turn</p>
+<div className='board-container'>
             <div className="vertical-border left"></div>
             <div data-cell-index="0" className="cell 0"></div>
             <div data-cell-index="1" className="cell 1"></div>
@@ -23,5 +25,7 @@ export default function StartedGame(){
             <div data-cell-index="8" className="cell 8"></div>
             <div className="vertical-border right"></div>
         </div>
+        <p className='remaining-time'>time left: 2s</p>
+</div>
     )
 }
