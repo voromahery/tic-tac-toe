@@ -1,24 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useAppSelector, useAppDispatch} from '../app/hooks';
-import {addFirstPlayerScore ,newFirstPlayer} from '../features/addFirstPlayer'
-import { newSecondPlayer, secondPlayerScore} from '../features/addSecondPlayer'
+import {addFirstPlayerScore ,newFirstPlayer, newFirstPlayerScore} from '../features/addFirstPlayer'
+import { newSecondPlayer, secondPlayerScore, newSecondPlayerScore} from '../features/addSecondPlayer'
 import {gameTimer} from '../features/timer'
 import {start} from '../features/startScreenSlice'
 import { next, isNext } from "../features/nextPlayer";
 import cross from '../images/cross.svg'
 import circle from '../images/circle.svg'
-
-// Possibility to win
-//[0, 1, 2]
-//[3, 4, 5]
-//[6, 7, 8]
-
-//[0, 3, 6]
-//[3, 4, 5]
-//[6, 7, 8]
-
-//[2, 4, 6]
-//[0, 4, 8]
 
 export default function StartedGame(){
     const dispatch = useAppDispatch();
@@ -26,28 +14,24 @@ export default function StartedGame(){
     const secondPlayer = useAppSelector(newSecondPlayer);
     const timer = useAppSelector(gameTimer)
     const nextPlayer = useAppSelector(next)
-    // const firstPlayerScores = useAppSelector(newFirstPlayerScore)
-    // const secondPlayerScores = useAppSelector(newSecondPlayerScore)
+    const firstPlayerScores = useAppSelector(newFirstPlayerScore)
+    const secondPlayerScores = useAppSelector(newSecondPlayerScore)
     const [countDown, setCountDown] = useState(timer)
     const circlePiece = <img src={circle} alt='circle'/>
     const crossPiece = <img src={cross} alt='cross'/>
     const [squares, setSquares] = React.useState(Array(9).fill(null))
-    
-    // const player:{player: string, score: number}[] = [
-    //   {
-    //     player: firstPlayer, 
-    //     score: firstPlayerScores, 
-    //   }, 
-    //   {
-    //     player: secondPlayer, 
-    //     score: secondPlayerScores, 
-    //   }
-    // ]
-
-    const piecesCollector = squares.filter(item => item !== null).length
+    const piecesCollector:number = squares.filter(item => item !== null).length    
+    const player:{player: string, score: number}[] = [
+      {
+        player: firstPlayer, 
+        score: firstPlayerScores, 
+      }, 
+      {
+        player: secondPlayer, 
+        score: secondPlayerScores, 
+      }
+    ]
    
-    
-
      const winner = calculateWinner(squares)
 
     function calculateNextValue(squares:any) {
@@ -99,31 +83,24 @@ export default function StartedGame(){
     let myInterval = setInterval(() => {
             countDown > 0 && setCountDown(countDown - 1)
         }, 1000)
-        if(winner === 'X' || winner === 'O' || piecesCollector === 9) {
-          setCountDown(0)
-        }
   
         return ()=> {
             clearInterval(myInterval);
           };
 
-    },[countDown, winner, piecesCollector]);
+    },[countDown]);
 
 useEffect(() => {
-  if(countDown !== 0 && winner === 'X'){
-    dispatch(addFirstPlayerScore())
-  }
-  if(countDown !== 0 && winner === 'O'){
-    dispatch(secondPlayerScore())
-  }
-  if (countDown === 0 && nextPlayer){
-    dispatch(secondPlayerScore())
-  } 
-  else if(countDown === 0 && !nextPlayer) {
-    dispatch(addFirstPlayerScore())
-  } 
-  
+  (countDown !== 0 && winner === 'X') && dispatch(addFirstPlayerScore());
+  (countDown !== 0 && winner === 'O') && dispatch(secondPlayerScore()); 
+  (countDown === 0 && nextPlayer) && dispatch(secondPlayerScore());
+  (countDown === 0 && !nextPlayer) && dispatch(addFirstPlayerScore())
 }, [nextPlayer, countDown, dispatch, winner])
+
+
+useEffect(() => {
+  (winner === 'X' || winner === 'O' || piecesCollector === 9) && setCountDown(0)
+}, [winner, piecesCollector])
 
 function textToDisplay(){
   if(piecesCollector === 9){
@@ -141,7 +118,6 @@ function textToDisplay(){
   if (countDown === 0 && winner !=='X' && winner !== 'O') {
   return <p className='player-to-play'>Time out - {nextPlayer ? secondPlayer : firstPlayer} won</p>
   }
-
 }
 
     return(
