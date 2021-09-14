@@ -4,6 +4,7 @@ import startReducer from '../features/startScreenSlice'
 import addPlayerReducer from '../features/addPlayer'
 import secondPlayerReducer from '../features/addSecondPlayer'
 import timerReducer from '../features/timer'
+import nextPlayerReducer from '../features/nextPlayer';
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     start: startReducer,
     addPlayer: addPlayerReducer,
     secondPlayer: secondPlayerReducer,
-    timer: timerReducer
+    timer: timerReducer,
+    isNext: nextPlayerReducer
   },
 });
 
