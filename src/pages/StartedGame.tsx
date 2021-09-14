@@ -44,6 +44,10 @@ export default function StartedGame(){
     //   }
     // ]
 
+    const piecesCollector = squares.filter(item => item !== null).length
+   
+    
+
      const winner = calculateWinner(squares)
 
     function calculateNextValue(squares:any) {
@@ -95,14 +99,15 @@ export default function StartedGame(){
     let myInterval = setInterval(() => {
             countDown > 0 && setCountDown(countDown - 1)
         }, 1000)
-        if(winner === 'X' || winner === 'O') {
+        if(winner === 'X' || winner === 'O' || piecesCollector === 9) {
           setCountDown(0)
         }
+  
         return ()=> {
             clearInterval(myInterval);
           };
 
-    },[countDown, winner]);
+    },[countDown, winner, piecesCollector]);
 
 useEffect(() => {
   if(countDown !== 0 && winner === 'X'){
@@ -121,6 +126,9 @@ useEffect(() => {
 }, [nextPlayer, countDown, dispatch, winner])
 
 function textToDisplay(){
+  if(piecesCollector === 9){
+    return <p className='player-to-play'>Draw!</p>
+  }
   if (winner === 'X') {
     return <p className='player-to-play'>{firstPlayer} won</p>
   }
@@ -133,6 +141,7 @@ function textToDisplay(){
   if (countDown === 0 && winner !=='X' && winner !== 'O') {
   return <p className='player-to-play'>Time out - {nextPlayer ? secondPlayer : firstPlayer} won</p>
   }
+
 }
 
     return(
