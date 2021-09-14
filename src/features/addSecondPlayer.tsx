@@ -3,11 +3,13 @@ import { RootState } from '../app/store';
 
 export interface StartState {
   value: string;
+  score: number;
   status: 'add-second-player';
 }
 
 const initialState: StartState = {
   value: '',
+  score: 1,
   status: 'add-second-player',
 };
 
@@ -17,15 +19,20 @@ export const secondPlayerSlice = createSlice({
   reducers: {
     secondPlayer: (state) => {
       state.value = 'KEN KANEKI';
+      state.score += 1
     }, 
     addSecondPlayer: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
+    addSecondPlayerScore: (state, action: PayloadAction<number>) => {
+      state.score = action.payload;
+    },
   },
 });
 
-export const { secondPlayer, addSecondPlayer} = secondPlayerSlice.actions;
+export const { secondPlayer, addSecondPlayer, addSecondPlayerScore} = secondPlayerSlice.actions;
 
 export const newSecondPlayer = (state: RootState) => state.secondPlayer.value;
+export const newSecondPlayerScore = (state: RootState) => state.secondPlayer.score;
 
 export default secondPlayerSlice.reducer;
