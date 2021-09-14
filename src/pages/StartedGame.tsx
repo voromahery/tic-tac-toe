@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useAppSelector, useAppDispatch} from '../app/hooks';
-import {addFirstPlayerScore ,newFirstPlayer, newFirstPlayerScore} from '../features/addFirstPlayer'
-import { newSecondPlayer, newSecondPlayerScore, secondPlayerScore} from '../features/addSecondPlayer'
+import {addFirstPlayerScore ,newFirstPlayer} from '../features/addFirstPlayer'
+import { newSecondPlayer, secondPlayerScore} from '../features/addSecondPlayer'
 import {gameTimer} from '../features/timer'
 import {start} from '../features/startScreenSlice'
 import { next, isNext } from "../features/nextPlayer";
@@ -17,44 +17,76 @@ import circle from '../images/circle.svg'
 //[3, 4, 5]
 //[6, 7, 8]
 
-//[6, 4, 2]
+//[2, 4, 6]
 //[0, 4, 8]
 
 export default function StartedGame(){
     const dispatch = useAppDispatch();
-    const [winnerMessage, setWinnerMessage] = useState('')
     const firstPlayer = useAppSelector(newFirstPlayer);
     const secondPlayer = useAppSelector(newSecondPlayer);
     const timer = useAppSelector(gameTimer)
     const nextPlayer = useAppSelector(next)
-    const firstPlayerScores = useAppSelector(newFirstPlayerScore)
-    const secondPlayerScores = useAppSelector(newSecondPlayerScore)
+    // const firstPlayerScores = useAppSelector(newFirstPlayerScore)
+    // const secondPlayerScores = useAppSelector(newSecondPlayerScore)
     const [countDown, setCountDown] = useState(timer)
     const circlePiece = <img src={circle} alt='circle'/>
     const crossPiece = <img src={cross} alt='cross'/>
     const [squares, setSquares] = React.useState(Array(9).fill(null))
+    
+    // const player:{player: string, score: number}[] = [
+    //   {
+    //     player: firstPlayer, 
+    //     score: firstPlayerScores, 
+    //   }, 
+    //   {
+    //     player: secondPlayer, 
+    //     score: secondPlayerScores, 
+    //   }
+    // ]
 
-    const player = [{player: firstPlayer, score: firstPlayerScores}, {player: secondPlayer, score: secondPlayerScores}]
-    console.log(player)
+     const winner = calculateWinner(squares)
 
     function calculateNextValue(squares:any) {
-        return squares.filter(Boolean).length % 2 === 0 ? crossPiece : circlePiece
+        return squares.filter(Boolean).length % 2 === 0 ? "X" : 'O'
       }
-  
-    const nextValue = calculateNextValue(squares)
-    function selectSquare(square:any) {
+
+      function calculateWinner(square:any) {
+        const lines = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ]
+        for (let i = 0; i < lines.length; i++) {
+          const [a, b, c] = lines[i]
+          
+          if (square[a] && square[a] === square[b] && square[a] === square[c]) {
+            return square[a]
+          }
+        }
+        return null
+      }
+
+    function selectSquare(square:number) {
+      if (winner || squares[square]){
+        return
+      }
       const squaresCopy = [...squares]
-      squaresCopy[square] = nextValue
+      squaresCopy[square] = calculateNextValue(squares)
       setSquares(squaresCopy)
     }
 
-    function renderSquare(i:any) {
+    function renderSquare(i:number) {
       return (
         <button className='cell' disabled={countDown === 0} onClick={() => {
           dispatch(isNext())
           return selectSquare(i)
         }}>
-          {squares[i]}
+          {squares[i] === 'X' && squares[i] !== null ? crossPiece : squares[i] === 'O' && squares[i] !== null && circlePiece}
         </button>
       )
     }
@@ -79,17 +111,25 @@ useEffect(() => {
 }, [nextPlayer, countDown, dispatch])
 
 function textToDisplay(){
+  if (countDown !== 0 && winner === 'X') {
+    return <p className='player-to-play'>{firstPlayer} won</p>
+  }
+  if (countDown !== 0 && winner === 'O') {
+    return <p className='player-to-play'>{secondPlayer} won</p>
+  }
   if(countDown !== 0){
   return  <p className='player-to-play'>{nextPlayer ? secondPlayer : firstPlayer}’s turn</p>
   } 
-  if (countDown === 0) {
+  if (countDown === 0 && winner !=='X' && winner !== 'O') {
   return <p className='player-to-play'>Time out - {nextPlayer ? secondPlayer : firstPlayer} won</p>
   }
 }
 
+
     return(
         <div className='started-wrapper'>
          {textToDisplay()}
+         
           <div className='board-container'>
             <div className="vertical-border left"></div>
             <div className="horizontal-border top"></div>
