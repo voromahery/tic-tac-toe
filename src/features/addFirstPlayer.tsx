@@ -19,18 +19,20 @@ export const addFirstPlayerSlice = createSlice({
   reducers: {
     addFirstPlayer: (state) => {
       state.value = 'KEN KANEKI';
-      state.score += 1;
     }, 
+    addFirstPlayerScore: (state) => {
+      state.score += 1;
+    },
     addNewFirstPlayer: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
-    playerScore: (state, action: PayloadAction<number>) => {
+    firstPlayerScore: (state, action: PayloadAction<number>) => {
       state.score = action.payload;
     },
   },
 });
 
-export const { addFirstPlayer, addNewFirstPlayer, playerScore} = addFirstPlayerSlice.actions;
+export const { addFirstPlayer, addNewFirstPlayer, firstPlayerScore, addFirstPlayerScore} = addFirstPlayerSlice.actions;
 
 export const newFirstPlayer = (state: RootState) => state.addFirstPlayer.value;
 export const newFirstPlayerScore = (state: RootState) => state.addFirstPlayer.score;

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useAppSelector, useAppDispatch} from '../app/hooks';
-import {newFirstPlayer, newFirstPlayerScore} from '../features/addFirstPlayer'
-import { newSecondPlayer, newSecondPlayerScore} from '../features/addSecondPlayer'
+import {addFirstPlayerScore ,newFirstPlayer, newFirstPlayerScore} from '../features/addFirstPlayer'
+import { newSecondPlayer, newSecondPlayerScore, secondPlayerScore} from '../features/addSecondPlayer'
 import {gameTimer} from '../features/timer'
 import {start} from '../features/startScreenSlice'
 import { next, isNext } from "../features/nextPlayer";
@@ -27,13 +27,13 @@ export default function StartedGame(){
     const secondPlayer = useAppSelector(newSecondPlayer);
     const timer = useAppSelector(gameTimer)
     const nextPlayer = useAppSelector(next)
-    const firstPlayerScore = useAppSelector(newFirstPlayerScore)
-    const secondPlayerScore = useAppSelector(newSecondPlayerScore)
+    const firstPlayerScores = useAppSelector(newFirstPlayerScore)
+    const secondPlayerScores = useAppSelector(newSecondPlayerScore)
     const [countDown, setCountDown] = useState(timer)
     const circlePiece = <img src={circle} alt='circle'/>
     const crossPiece = <img src={cross} alt='cross'/>
     const [squares, setSquares] = React.useState(Array(9).fill(null))
-    const player = [{player: firstPlayer, score: firstPlayerScore}, {player: secondPlayer, score: secondPlayerScore}]
+    const player = [{player: firstPlayer, score: firstPlayerScores}, {player: secondPlayer, score: secondPlayerScores}]
     console.log(player)
     function calculateNextValue(squares:any) {
         return squares.filter(Boolean).length % 2 === 0 ? crossPiece : circlePiece
@@ -50,6 +50,8 @@ export default function StartedGame(){
       return (
         <button className='cell' onClick={() => {
           dispatch(isNext())
+          // dispatch(addFirstPlayerScore())
+          // dispatch(secondPlayerScore())
           return selectSquare(i)
         }}>
           {squares[i]}
