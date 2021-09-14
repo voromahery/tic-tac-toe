@@ -9,7 +9,7 @@ export interface StartState {
 
 const initialState: StartState = {
   value: '',
-  score: 1,
+  score: 0,
   status: 'add-second-player',
 };
 
