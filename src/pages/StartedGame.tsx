@@ -95,26 +95,36 @@ export default function StartedGame(){
     let myInterval = setInterval(() => {
             countDown > 0 && setCountDown(countDown - 1)
         }, 1000)
+        if(winner === 'X' || winner === 'O') {
+          setCountDown(0)
+        }
         return ()=> {
             clearInterval(myInterval);
           };
-    },[countDown]);
+
+    },[countDown, winner]);
 
 useEffect(() => {
+  if(countDown !== 0 && winner === 'X'){
+    dispatch(addFirstPlayerScore())
+  }
+  if(countDown !== 0 && winner === 'O'){
+    dispatch(secondPlayerScore())
+  }
   if (countDown === 0 && nextPlayer){
     dispatch(secondPlayerScore())
   } 
   else if(countDown === 0 && !nextPlayer) {
     dispatch(addFirstPlayerScore())
-  }
+  } 
   
-}, [nextPlayer, countDown, dispatch])
+}, [nextPlayer, countDown, dispatch, winner])
 
 function textToDisplay(){
-  if (countDown !== 0 && winner === 'X') {
+  if (winner === 'X') {
     return <p className='player-to-play'>{firstPlayer} won</p>
   }
-  if (countDown !== 0 && winner === 'O') {
+  if (winner === 'O') {
     return <p className='player-to-play'>{secondPlayer} won</p>
   }
   if(countDown !== 0){
@@ -124,7 +134,6 @@ function textToDisplay(){
   return <p className='player-to-play'>Time out - {nextPlayer ? secondPlayer : firstPlayer} won</p>
   }
 }
-
 
     return(
         <div className='started-wrapper'>
