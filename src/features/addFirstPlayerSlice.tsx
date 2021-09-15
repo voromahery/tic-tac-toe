@@ -20,13 +20,13 @@ export const addFirstPlayerSlice = createSlice({
     addFirstPlayer: (state) => {
       state.value = "KEN KANEKI";
     },
-    addFirstPlayerScore: (state) => {
+    firstPlayerScore: (state) => {
       state.score += 1;
     },
     addNewFirstPlayer: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
-    firstPlayerScore: (state, action: PayloadAction<number>) => {
+    addFirstPlayerScore: (state, action: PayloadAction<number>) => {
       state.score = action.payload;
     },
   },

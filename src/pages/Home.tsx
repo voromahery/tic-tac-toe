@@ -2,18 +2,22 @@ import React from "react";
 import cross from "../images/cross.svg";
 import circle from "../images/circle.svg";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { start, extraFeature, addExtraFeature } from "../features/startScreenSlice";
+import {
+  start,
+  extraFeature,
+  addExtraFeature,
+} from "../features/startScreenSlice";
 import {
   addNewFirstPlayer,
   newFirstPlayer,
   newFirstPlayerScore,
-  firstPlayerScore
+  addFirstPlayerScore,
 } from "../features/addFirstPlayerSlice";
 import {
   newSecondPlayer,
   addSecondPlayer,
   newSecondPlayerScore,
-  addSecondPlayerScore
+  addSecondPlayerScore,
 } from "../features/addSecondPlayerSlice";
 
 import { addTimer, gameTimer } from "../features/timerSlice";
@@ -33,12 +37,13 @@ export default function Home() {
 
   console.log(player, displayPlayerStatus);
 
-  function rebootGame(){
-    dispatch(addNewFirstPlayer(''))
-    dispatch(addSecondPlayer(''))
+  function rebootGame() {
+    dispatch(addTimer(3));
+    dispatch(addNewFirstPlayer(""));
+    dispatch(addSecondPlayer(""));
     dispatch(addExtraFeature(false));
-    dispatch(firstPlayerScore(0))
-    dispatch(addSecondPlayerScore(0))
+    dispatch(addFirstPlayerScore(0));
+    dispatch(addSecondPlayerScore(0));
   }
 
   return (
@@ -80,17 +85,18 @@ export default function Home() {
       <div className="time-limit">
         <p>turn Time limit in seconds:</p>
         {!displayPlayerStatus ? (
-          <input
-            type="number"
-            name="time-limit"
-            value={timer}
-            min={0}
-            max={60}
-            onChange={(e) => dispatch(addTimer(Number(e.target.value)))}
-            placeholder="3s"
-          />
+          <>
+            <input
+              type="number"
+              name="time-limit"
+              min={3}
+              max={60}
+              onChange={(e) => dispatch(addTimer(Number(e.target.value)))}
+              placeholder={`${timer}s`}
+            />
+          </>
         ) : (
-          <p className='timer'>{timer}s</p>
+          <p className="timer">{timer}s</p>
         )}
       </div>
 
@@ -103,7 +109,9 @@ export default function Home() {
           <button className="start-button" onClick={() => dispatch(start())}>
             Play again
           </button>
-          <button className="start-button" onClick={rebootGame}>Reboot</button>
+          <button className="start-button reboot" onClick={rebootGame}>
+            Reboot
+          </button>
         </div>
       )}
     </div>

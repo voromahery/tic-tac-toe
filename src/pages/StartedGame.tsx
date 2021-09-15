@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import {
-  addFirstPlayerScore,
+  firstPlayerScore,
   newFirstPlayer,
 } from "../features/addFirstPlayerSlice";
 import {
@@ -20,8 +20,7 @@ export default function StartedGame() {
   const secondPlayer = useAppSelector(newSecondPlayer);
   const timer = useAppSelector(gameTimer);
   const nextPlayer = useAppSelector(next);
-  const [isDisabled, setIsDisabled] = useState(false);
-
+  
   const [countDown, setCountDown] = useState(timer);
   const [squares, setSquares] = React.useState(Array(9).fill(null));
 
@@ -48,13 +47,13 @@ export default function StartedGame() {
   }, [countDown]);
 
   useEffect(() => {
-    countDown !== 0 && winner === "X" && dispatch(addFirstPlayerScore());
+    countDown !== 0 && winner === "X" && dispatch(firstPlayerScore());
     countDown !== 0 && winner === "O" && dispatch(secondPlayerScore());
     if (countDown === 0 && nextPlayer && !winner && piecesCollector !== 9) {
       dispatch(secondPlayerScore());
     }
     if (countDown === 0 && !nextPlayer && !winner && piecesCollector !== 9) {
-      dispatch(addFirstPlayerScore());
+      dispatch(firstPlayerScore());
     }
   }, [nextPlayer, countDown, dispatch, winner, piecesCollector]);
 
