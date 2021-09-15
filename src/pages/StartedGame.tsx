@@ -32,9 +32,19 @@ export default function StartedGame() {
   ).length;
 
   const winner = calculateWinner(squares);
+const changeValueIntoNumber = squares.map((item, index) => {
+  return item === null ? index : item
+})
+
+const availableIndex = changeValueIntoNumber.filter(item => typeof item === "number")
+
+const getRandomNumber = Math.floor(Math.random() * availableIndex.length)
+
+const indexToPut = availableIndex[getRandomNumber]
+
 
   function calculateNextValue(squares: any) {
-    return squares.filter(Boolean).length % 2 === 0 ? "X" : "O";
+      return squares.filter(Boolean).length % 2 === 0 ? "X" : "O";
   }
 
   useEffect(() => {
@@ -195,9 +205,14 @@ export default function StartedGame() {
     dispatch(addExtraFeature(true));
   }
 
+  useEffect(()=> {
+  if (secondPlayer.length === 0 && (squares.filter(Boolean).length % 2 !== 0) && !winner ){
+    selectCell(indexToPut)
+  }
+  }, [indexToPut, secondPlayer, winner])
+
   return (
     <div className="started-wrapper">
-      {textToDisplay()}
       <div className="board-container">
         <div className="vertical-border left"></div>
         <div className="horizontal-border top"></div>

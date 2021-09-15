@@ -138,9 +138,11 @@ input,
   max-width: 138px;
 }
 
-.cell img {
-  margin-left: 20px;
+.cell img{
+  padding: 23px;
+  margin: 0;
 }
+
 
 .horizontal-border,
 .vertical-border,
