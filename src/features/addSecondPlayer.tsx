@@ -1,25 +1,25 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../app/store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../app/store";
 
 export interface StartState {
   value: string;
   score: number;
-  status: 'add-second-player';
+  status: "add-second-player";
 }
 
 const initialState: StartState = {
-  value: '',
+  value: "",
   score: 0,
-  status: 'add-second-player',
+  status: "add-second-player",
 };
 
 export const secondPlayerSlice = createSlice({
-  name: 'add-second-player',
+  name: "add-second-player",
   initialState,
   reducers: {
     secondPlayer: (state) => {
-      state.value = 'KEN KANEKI';
-    }, 
+      state.value = "KEN KANEKI";
+    },
     secondPlayerScore: (state) => {
       state.score += 1;
     },
@@ -32,9 +32,15 @@ export const secondPlayerSlice = createSlice({
   },
 });
 
-export const { secondPlayer, addSecondPlayer, addSecondPlayerScore, secondPlayerScore} = secondPlayerSlice.actions;
+export const {
+  secondPlayer,
+  addSecondPlayer,
+  addSecondPlayerScore,
+  secondPlayerScore,
+} = secondPlayerSlice.actions;
 
 export const newSecondPlayer = (state: RootState) => state.secondPlayer.value;
-export const newSecondPlayerScore = (state: RootState) => state.secondPlayer.score;
+export const newSecondPlayerScore = (state: RootState) =>
+  state.secondPlayer.score;
 
 export default secondPlayerSlice.reducer;

@@ -1,10 +1,10 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterReducer from '../features/counter/counterSlice';
-import startReducer from '../features/startScreenSlice'
-import addFirstPlayerReducer from '../features/addFirstPlayer'
-import secondPlayerReducer from '../features/addSecondPlayer'
-import timerReducer from '../features/timer'
-import nextPlayerReducer from '../features/nextPlayer';
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import counterReducer from "../features/counter/counterSlice";
+import startReducer from "../features/startScreenSlice";
+import addFirstPlayerReducer from "../features/addFirstPlayer";
+import secondPlayerReducer from "../features/addSecondPlayer";
+import timerReducer from "../features/timer";
+import nextPlayerReducer from "../features/nextPlayer";
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +13,7 @@ export const store = configureStore({
     addFirstPlayer: addFirstPlayerReducer,
     secondPlayer: secondPlayerReducer,
     timer: timerReducer,
-    isNext: nextPlayerReducer
+    isNext: nextPlayerReducer,
   },
 });
 

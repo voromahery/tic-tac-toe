@@ -1,18 +1,18 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../app/store';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "../app/store";
 
 export interface StartState {
   value: boolean;
-  status: 'start';
+  status: "start";
 }
 
 const initialState: StartState = {
   value: false,
-  status: 'start',
+  status: "start",
 };
 
 export const startSlice = createSlice({
-  name: 'start',
+  name: "start",
   initialState,
   reducers: {
     start: (state) => {

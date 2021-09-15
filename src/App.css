@@ -1,108 +1,146 @@
-
 body {
   font-family: "Usuazi Hosomozi", Arial, Helvetica, sans-serif;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
-body,.start-button,.heading, .board-container {margin: auto;}
+body,
+.start-button,
+.heading,
+.board-container {
+  margin: auto;
+}
 
-.heading {margin-bottom: 90px;}
+.heading {
+  margin-bottom: 90px;
+}
 
-button, .cell {
+button,
+.cell {
   cursor: pointer;
   border: none;
 }
 
-.board, input, .started-wrapper {font-size: 48px;}
+.board,
+input,
+.started-wrapper {
+  font-size: 48px;
+}
 
-.start-button, .heading {font-size: 72px;} 
+.start-button,
+.heading {
+  font-size: 72px;
+}
 
 input::-webkit-inner-spin-button {
   appearance: auto;
   display: none;
 }
 
-::placeholder{
+::placeholder {
   font-size: 48px;
-  color: #8B8585
+  color: #8b8585;
 }
 
-::-webkit-input-placeholder{
+::-webkit-input-placeholder {
   font-size: 48px;
-  color: #8B8585
+  color: #8b8585;
 }
 
 ::-moz-placeholder {
   font-size: 48px;
-  color: #8B8585
+  color: #8b8585;
 }
 
-.circle, .cross {max-width: 74px;}
+.circle,
+.cross {
+  max-width: 74px;
+}
 
- .player-option {
+.player-option {
   gap: 39px;
   margin-top: 24.32px;
   margin-bottom: 24.32px;
- }
+}
 
-.time-limit, .player-option, .cell{
+.time-limit,
+.player-option,
+.cell {
   display: flex;
   align-items: center;
 }
 
-.time-limit input {max-width: 80px;}
+.time-limit input {
+  max-width: 80px;
+}
 
- input {
-   max-height: 50px;
-   color: black;
- }
+input {
+  max-height: 50px;
+  color: black;
+}
 
- p span {color: #8B8585;}
+p span {
+  color: #8b8585;
+}
 
-.start-button, input {
+.start-button,
+input {
   border: none;
   outline: none;
 }
 
- input,.player-option,.start-button{width: 100%;}
+input,
+.player-option,
+.start-button {
+  width: 100%;
+}
 
- .start-button,.heading {
+.start-button,
+.heading {
   max-width: max-content;
   display: block;
-  background-color: #FFFFFF;
- }
+  background-color: #ffffff;
+}
 
- .time-limit p {margin: 0;}
+.time-limit p {
+  margin: 0;
+}
 
- .time-limit{
+.time-limit {
   gap: 16px;
   margin-bottom: 47px;
   margin-top: 31.32px;
- }
+}
 
-.started-wrapper {text-align: center;}
+.started-wrapper {
+  text-align: center;
+}
 
- .board-container {
+.board-container {
   position: relative;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   max-width: 419.17px;
- }
+}
 
- .cell {
+.cell {
   height: 138px;
   max-width: 138px;
- }
+}
 
-.cell img {margin-left: 20px;}
+.cell img {
+  margin-left: 20px;
+}
 
- .horizontal-border, .vertical-border, .draw-line {
+.horizontal-border,
+.vertical-border,
+.draw-line {
   display: block;
   position: absolute;
 }
 
-.horizontal-border, .vertical-border {
-  background-color: #4A4444;
+.horizontal-border,
+.vertical-border {
+  background-color: #4a4444;
   width: 454.17px;
   max-width: calc(454.17px - 33px);
   height: 4px;
@@ -113,21 +151,32 @@ input::-webkit-inner-spin-button {
   height: 5px;
   width: 530.36px;
 }
- 
-.vertical-border {transform: rotate(91.63deg);}
+
+.vertical-border {
+  transform: rotate(91.63deg);
+}
 
 .horizontal-border {
   transform: rotate(180deg);
   max-width: calc(100% - 33px);
 }
 
-.left, .right {top: 50%;}
+.left,
+.right {
+  top: 50%;
+}
 
-.left {right: 72px;}
+.left {
+  right: 72px;
+}
 
-.right {left: 72px}
+.right {
+  left: 72px;
+}
 
-.top {top: calc(50% - calc(139px / 2));}
+.top {
+  top: calc(50% - calc(139px / 2));
+}
 
 .down {
   top: calc(50% + calc(139px / 2));
@@ -135,9 +184,8 @@ input::-webkit-inner-spin-button {
 }
 
 .left-draw {
-  transform: rotate(
-138deg);
-left: -16%;
+  transform: rotate(138deg);
+  left: -16%;
 }
 
 .right-draw {
@@ -145,24 +193,44 @@ left: -16%;
   left: -12%;
 }
 
-.left-draw, .right-draw{top: 50%;}
-
-.top-draw {top: 16%;}
-
-.center-draw {top: 50%;}
-
-.bottom-draw {top: 86%;}
-
-.top-draw, .center-draw, .bottom-draw {left: -15%;}
-
-.vertical-left-draw, .vertical-right-draw, .vertical-center-draw{
-  transform: rotate(
-    90deg);
-    top: 50%;
+.left-draw,
+.right-draw {
+  top: 50%;
 }
 
-.vertical-left-draw{left: -47%;}
+.top-draw {
+  top: 16%;
+}
 
-.vertical-center-draw{left: -13%;}
+.center-draw {
+  top: 50%;
+}
 
-.vertical-right-draw{left: 20%;}
+.bottom-draw {
+  top: 86%;
+}
+
+.top-draw,
+.center-draw,
+.bottom-draw {
+  left: -15%;
+}
+
+.vertical-left-draw,
+.vertical-right-draw,
+.vertical-center-draw {
+  transform: rotate(90deg);
+  top: 50%;
+}
+
+.vertical-left-draw {
+  left: -47%;
+}
+
+.vertical-center-draw {
+  left: -13%;
+}
+
+.vertical-right-draw {
+  left: 20%;
+}
