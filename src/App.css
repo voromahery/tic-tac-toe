@@ -20,6 +20,10 @@ button,
   border: none;
 }
 
+p{
+  margin: 0;
+}
+
 .board,
 input,
 .started-wrapper {
@@ -237,4 +241,8 @@ input,
 
 .restart {
   padding-top: 68px;
+}
+
+.timer {
+  color: #8B8585;
 }

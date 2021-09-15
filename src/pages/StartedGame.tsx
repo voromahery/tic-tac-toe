@@ -3,15 +3,13 @@ import { useAppSelector, useAppDispatch } from "../app/hooks";
 import {
   addFirstPlayerScore,
   newFirstPlayer,
-  newFirstPlayerScore,
 } from "../features/addFirstPlayerSlice";
 import {
   newSecondPlayer,
   secondPlayerScore,
-  newSecondPlayerScore,
 } from "../features/addSecondPlayerSlice";
 import { gameTimer } from "../features/timerSlice";
-import { start } from "../features/startScreenSlice";
+import { start, addExtraFeature } from "../features/startScreenSlice";
 import { next, isNext } from "../features/nextPlayerSlice";
 import cross from "../images/cross.svg";
 import circle from "../images/circle.svg";
@@ -22,33 +20,23 @@ export default function StartedGame() {
   const secondPlayer = useAppSelector(newSecondPlayer);
   const timer = useAppSelector(gameTimer);
   const nextPlayer = useAppSelector(next);
-  const firstPlayerScores = useAppSelector(newFirstPlayerScore);
-  const secondPlayerScores = useAppSelector(newSecondPlayerScore);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const [countDown, setCountDown] = useState(timer);
   const [squares, setSquares] = React.useState(Array(9).fill(null));
-  
+
   const circlePiece = <img src={circle} alt="circle" />;
   const crossPiece = <img src={cross} alt="cross" />;
-  
+
   const piecesCollector: number = squares.filter(
     (item) => item !== null
   ).length;
 
   const winner = calculateWinner(squares);
- 
-  const player: { player: string; score: number }[] = [
-    { player: firstPlayer, score: firstPlayerScores },
-    { player: secondPlayer, score: secondPlayerScores },
-  ];
-
-  console.log(player);
-  
 
   function calculateNextValue(squares: any) {
     return squares.filter(Boolean).length % 2 === 0 ? "X" : "O";
   }
-
 
   useEffect(() => {
     let myInterval = setInterval(() => {
@@ -62,12 +50,24 @@ export default function StartedGame() {
   useEffect(() => {
     countDown !== 0 && winner === "X" && dispatch(addFirstPlayerScore());
     countDown !== 0 && winner === "O" && dispatch(secondPlayerScore());
-    countDown === 0 && nextPlayer && dispatch(secondPlayerScore());
-    countDown === 0 && !nextPlayer && dispatch(addFirstPlayerScore());
-  }, [nextPlayer, countDown, dispatch, winner]);
+    if (countDown === 0 && nextPlayer && !winner && piecesCollector !== 9) {
+      dispatch(secondPlayerScore());
+    }
+    if (countDown === 0 && !nextPlayer && !winner && piecesCollector !== 9) {
+      dispatch(addFirstPlayerScore());
+    }
+  }, [nextPlayer, countDown, dispatch, winner, piecesCollector]);
 
   useEffect(() => {
-    (winner === "X" || winner === "O" || piecesCollector === 9) &&
+    (winner === "X" || winner === "O") && setCountDown(0);
+    ((piecesCollector === 9 &&
+      winner !== "X" &&
+      winner !== "O" &&
+      winner !== "X") ||
+      (piecesCollector === 9 &&
+        winner !== "X" &&
+        winner !== "O" &&
+        winner !== "O")) &&
       setCountDown(0);
   }, [winner, piecesCollector]);
 
@@ -101,7 +101,7 @@ export default function StartedGame() {
       <button
         className="cell"
         disabled={countDown === 0}
-        key={i} 
+        key={i}
         onClick={() => {
           dispatch(isNext());
           return selectCell(i);
@@ -167,7 +167,7 @@ export default function StartedGame() {
   }
 
   function textToDisplay() {
-    if (piecesCollector === 9) {
+    if (piecesCollector === 9 && winner !== "X" && winner !== "O") {
       return <p className="player-to-play">Draw!</p>;
     }
     if (winner === "X") {
@@ -191,6 +191,10 @@ export default function StartedGame() {
       );
     }
   }
+  function replay() {
+    dispatch(start());
+    dispatch(addExtraFeature(true));
+  }
 
   return (
     <div className="started-wrapper">
@@ -200,7 +204,7 @@ export default function StartedGame() {
         <div className="horizontal-border top"></div>
         <div className="horizontal-border down"></div>
         <div className="vertical-border right"></div>
-        {squares.map((square:boolean, index:number) =>renderCell(index))}
+        {squares.map((square: boolean, index: number) => renderCell(index))}
         <div
           style={{ display: drawLine() ? "block" : "none" }}
           className={`draw-line ${drawLine()}`}
@@ -209,7 +213,7 @@ export default function StartedGame() {
       {countDown > 0 ? (
         <p className="remaining-time">time left: {countDown}s</p>
       ) : (
-        <button onClick={() => dispatch(start())} className="start-button restart">
+        <button onClick={replay} className="start-button restart">
           Restart
         </button>
       )}
