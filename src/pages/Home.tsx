@@ -3,9 +3,9 @@ import cross from "../images/cross.svg";
 import circle from "../images/circle.svg";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { start } from "../features/startScreenSlice";
-import { addNewFirstPlayer, newFirstPlayer } from "../features/addFirstPlayer";
-import { newSecondPlayer, addSecondPlayer } from "../features/addSecondPlayer";
-import { addTimer, gameTimer } from "../features/timer";
+import { addNewFirstPlayer, newFirstPlayer } from "../features/addFirstPlayerSlice";
+import { newSecondPlayer, addSecondPlayer } from "../features/addSecondPlayerSlice";
+import { addTimer, gameTimer } from "../features/timerSlice";
 export default function Home() {
   const dispatch = useAppDispatch();
   const firstPlayer = useAppSelector(newFirstPlayer);
@@ -47,7 +47,7 @@ export default function Home() {
         />
       </div>
       <button
-        className="start-button restart"
+        className="start-button"
         onClick={() => dispatch(start())}
       >
         Start

@@ -4,15 +4,15 @@ import {
   addFirstPlayerScore,
   newFirstPlayer,
   newFirstPlayerScore,
-} from "../features/addFirstPlayer";
+} from "../features/addFirstPlayerSlice";
 import {
   newSecondPlayer,
   secondPlayerScore,
   newSecondPlayerScore,
-} from "../features/addSecondPlayer";
-import { gameTimer } from "../features/timer";
+} from "../features/addSecondPlayerSlice";
+import { gameTimer } from "../features/timerSlice";
 import { start } from "../features/startScreenSlice";
-import { next, isNext } from "../features/nextPlayer";
+import { next, isNext } from "../features/nextPlayerSlice";
 import cross from "../images/cross.svg";
 import circle from "../images/circle.svg";
 
@@ -209,7 +209,7 @@ export default function StartedGame() {
       {countDown > 0 ? (
         <p className="remaining-time">time left: {countDown}s</p>
       ) : (
-        <button onClick={() => dispatch(start())} className="start-button">
+        <button onClick={() => dispatch(start())} className="start-button restart">
           Restart
         </button>
       )}

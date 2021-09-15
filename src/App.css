@@ -234,3 +234,7 @@ input,
 .vertical-right-draw {
   left: 20%;
 }
+
+.restart {
+  padding-top: 68px;
+}
