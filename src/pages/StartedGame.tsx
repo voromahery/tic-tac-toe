@@ -63,16 +63,15 @@ export default function StartedGame() {
     if (
       countDown === 0 &&
       nextPlayer &&
-      (winner !== "X" || winner !== "O") &&
+      (winner !== "X" && winner !== "O") &&
       piecesCollector !== 9
     ) {
       setIsDisabled(true);
       dispatch(secondPlayerScore());
-    }
-    if (
+    } if (
       countDown === 0 &&
       !nextPlayer &&
-      (winner !== "X" || winner !== "O") &&
+      (winner !== "X" && winner !== "O") &&
       piecesCollector !== 9
     ) {
       setIsDisabled(true);
@@ -86,6 +85,7 @@ export default function StartedGame() {
       setIsDisabled(true);
       dispatch(secondPlayerScore());
     }
+    
     // eslint-disable-next-line
   }, [nextPlayer, dispatch]);
 

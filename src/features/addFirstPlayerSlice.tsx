@@ -4,21 +4,21 @@ import { RootState } from "../app/store";
 export interface StartState {
   value: string;
   score: number;
-  status: "add-a-player";
+  status: "set-first-player";
 }
 
 const initialState: StartState = {
   value: "",
   score: 0,
-  status: "add-a-player",
+  status: "set-first-player",
 };
 
 export const addFirstPlayerSlice = createSlice({
-  name: "add-a-player",
+  name: "set-first-player",
   initialState,
   reducers: {
-    addFirstPlayer: (state) => {
-      state.value = "KEN KANEKI";
+    firstPlayer: (state) => {
+      state.value = "AI";
     },
     firstPlayerScore: (state) => {
       state.score += 1;
@@ -33,14 +33,14 @@ export const addFirstPlayerSlice = createSlice({
 });
 
 export const {
-  addFirstPlayer,
+  firstPlayer,
   setNewFirstPlayer,
   firstPlayerScore,
   setFirstPlayerScore,
 } = addFirstPlayerSlice.actions;
 
-export const newFirstPlayer = (state: RootState) => state.addFirstPlayer.value;
+export const newFirstPlayer = (state: RootState) => state.firstPlayer.value;
 export const newFirstPlayerScore = (state: RootState) =>
-  state.addFirstPlayer.score;
+  state.firstPlayer.score;
 
 export default addFirstPlayerSlice.reducer;

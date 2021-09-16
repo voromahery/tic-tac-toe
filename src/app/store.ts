@@ -8,7 +8,7 @@ import nextPlayerReducer from "../features/nextPlayerSlice";
 export const store = configureStore({
   reducer: {
     start: startReducer,
-    addFirstPlayer: addFirstPlayerReducer,
+    firstPlayer: addFirstPlayerReducer,
     secondPlayer: secondPlayerReducer,
     timer: timerReducer,
     isNext: nextPlayerReducer,
