@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import {
   firstPlayerScore,
@@ -20,7 +20,7 @@ export default function StartedGame() {
   const secondPlayer = useAppSelector(newSecondPlayer);
   const timer = useAppSelector(gameTimer);
   const nextPlayer = useAppSelector(next);
-  
+
   const [countDown, setCountDown] = useState(timer);
   const [squares, setSquares] = React.useState(Array(9).fill(null));
 
@@ -32,29 +32,30 @@ export default function StartedGame() {
   ).length;
 
   const winner = calculateWinner(squares);
-const changeValueIntoNumber = squares.map((item, index) => {
-  return item === null ? index : item
-})
+  const changeValueIntoNumber = squares.map((item, index) => {
+    return item === null ? index : item;
+  });
 
-const availableIndex = changeValueIntoNumber.filter(item => typeof item === "number")
+  const availableIndex = changeValueIntoNumber.filter(
+    (item) => typeof item === "number"
+  );
 
-const getRandomNumber = Math.floor(Math.random() * availableIndex.length)
+  const getRandomNumber = Math.floor(Math.random() * availableIndex.length);
 
-const indexToPut = availableIndex[getRandomNumber]
-
+  const indexToPut = availableIndex[getRandomNumber];
 
   function calculateNextValue(squares: any) {
-      return squares.filter(Boolean).length % 2 === 0 ? "X" : "O";
+    return squares.filter(Boolean).length % 2 === 0 ? "X" : "O";
   }
 
-  useEffect(() => {
-    let myInterval = setInterval(() => {
-      countDown > 0 && setCountDown(countDown - 1);
-    }, 1000);
-    return () => {
-      clearInterval(myInterval);
-    };
-  }, [countDown]);
+  // useEffect(() => {
+  //   let myInterval = setInterval(() => {
+  //     countDown > 0 && setCountDown(countDown - 1);
+  //   }, 1000);
+  //   return () => {
+  //     clearInterval(myInterval);
+  //   };
+  // }, [countDown]);
 
   useEffect(() => {
     countDown !== 0 && winner === "X" && dispatch(firstPlayerScore());
@@ -99,11 +100,14 @@ const indexToPut = availableIndex[getRandomNumber]
     }
   }
 
-  function selectCell(square: number) {
-    const squaresCopy = [...squares];
-    squaresCopy[square] = calculateNextValue(squares);
-    setSquares(squaresCopy);
-  }
+  const selectCell = useCallback(
+    (square: number) => {
+      const squaresCopy = [...squares];
+      squaresCopy[square] = calculateNextValue(squares);
+      setSquares(squaresCopy);
+    },
+    [squares]
+  );
 
   function renderCell(i: number) {
     return (
@@ -200,19 +204,47 @@ const indexToPut = availableIndex[getRandomNumber]
       );
     }
   }
+
   function replay() {
     dispatch(start());
     dispatch(addExtraFeature(true));
   }
 
-  useEffect(()=> {
-  if (secondPlayer.length === 0 && (squares.filter(Boolean).length % 2 !== 0) && !winner ){
-    selectCell(indexToPut)
-  }
-  }, [indexToPut, secondPlayer, winner])
+  useEffect(() => {
+    setTimeout(() => {
+      if (
+        secondPlayer.length === 0 &&
+        squares.filter(Boolean).length % 2 !== 0 &&
+        winner === undefined
+      ) {
+        selectCell(indexToPut);
+        dispatch(isNext());
+      }
+    }, 1000);
+
+    setTimeout(() => {
+      if (
+        firstPlayer.length === 0 &&
+        squares.filter(Boolean).length % 2 === 0 &&
+        winner === undefined
+      ) {
+        selectCell(indexToPut);
+        dispatch(isNext());
+      }
+    }, 1000);
+  }, [
+    indexToPut,
+    secondPlayer,
+    winner,
+    squares,
+    selectCell,
+    dispatch,
+    firstPlayer,
+  ]);
 
   return (
     <div className="started-wrapper">
+      {textToDisplay()}
       <div className="board-container">
         <div className="vertical-border left"></div>
         <div className="horizontal-border top"></div>

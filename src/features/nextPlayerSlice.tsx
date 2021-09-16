@@ -18,13 +18,13 @@ export const nextPlayerSlice = createSlice({
     isNext: (state) => {
       state.value = !state.value;
     },
-    nextPlayer: (state, action: PayloadAction<boolean>) => {
+    addNextPlayer: (state, action: PayloadAction<boolean>) => {
       state.value = action.payload;
     },
   },
 });
 
-export const { isNext, nextPlayer } = nextPlayerSlice.actions;
+export const { isNext, addNextPlayer } = nextPlayerSlice.actions;
 
 export const next = (state: RootState) => state.isNext.value;
 

@@ -35,8 +35,6 @@ export default function Home() {
     { player: secondPlayer, score: secondPlayerScores },
   ];
 
-  console.log(player, displayPlayerStatus);
-
   function rebootGame() {
     dispatch(addTimer(3));
     dispatch(addNewFirstPlayer(""));
