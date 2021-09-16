@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'usuazi-hosomozi';
-  src: url('./fonts/usuazi-hosomozi.woff2'), url('./fonts/usuazi-hosomozi.woff');
+  font-family: "usuazi-hosomozi";
+  src: url("./fonts/usuazi-hosomozi.woff2"), url("./fonts/usuazi-hosomozi.woff");
   font-weight: 400;
 }
 
@@ -19,19 +19,11 @@ body,
   margin: auto;
 }
 
-.heading {
-  margin-bottom: 90px;
-}
-
 button,
 .cell {
   cursor: pointer;
   border: none;
-  background-color: #FFFFFF;
-}
-
-p{
-  margin: 0;
+  background-color: #ffffff;
 }
 
 .board,
@@ -40,12 +32,30 @@ input,
   font-size: 48px;
 }
 
-.board{
+p {
+  margin: 0;
+}
+
+.heading {
+  margin-bottom: 90px;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  align-self: center;
+}
+
+.board {
   max-width: 847px;
   margin: auto;
 }
 
-.start-button,
+button,
 .heading {
   font-size: 72px;
 }
@@ -109,7 +119,8 @@ input {
 
 input,
 .player-option,
-.start-button {
+.start-button,
+.container {
   width: 100%;
 }
 
@@ -117,10 +128,6 @@ input,
 .heading {
   max-width: max-content;
   display: block;
-}
-
-.time-limit p {
-  margin: 0;
 }
 
 .time-limit {
@@ -147,11 +154,10 @@ input,
   max-width: 138px;
 }
 
-.cell img{
+.cell img {
   padding: 23px;
   margin: 0;
 }
-
 
 .horizontal-border,
 .vertical-border,
@@ -258,7 +264,7 @@ input,
 }
 
 .timer {
-  color: #8B8585;
+  color: #8b8585;
 }
 
 .reboot {

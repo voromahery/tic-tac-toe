@@ -8,7 +8,7 @@ import "./App.css";
 function App() {
   const newGame = useAppSelector(startGame);
   return (
-    <div>
+    <div className='container'>
       <h1 className="heading">Tic tac toe</h1>
       {newGame ? <StartedGame /> : <Home />}
     </div>
