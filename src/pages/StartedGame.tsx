@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
+import RenderTimer from "./timerComponent";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import {
   firstPlayerScore,
@@ -20,8 +21,8 @@ export default function StartedGame() {
   const secondPlayer = useAppSelector(newSecondPlayer);
   const timer = useAppSelector(gameTimer);
   const nextPlayer = useAppSelector(next);
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const [countDown, setCountDown] = useState(timer);
   const [squares, setSquares] = React.useState(Array(9).fill(null));
 
   const circlePiece = <img src={circle} alt="circle" />;
@@ -36,6 +37,12 @@ export default function StartedGame() {
     return item === null ? index : item;
   });
 
+  // useEffect(() => {
+  //   if (timer === 0){
+  //     setIsDisabled(true)
+  //   }
+  // }, [timer])
+
   const availableIndex = changeValueIntoNumber.filter(
     (item) => typeof item === "number"
   );
@@ -48,37 +55,47 @@ export default function StartedGame() {
     return squares.filter(Boolean).length % 2 === 0 ? "X" : "O";
   }
 
-  // useEffect(() => {
-  //   let myInterval = setInterval(() => {
-  //     countDown > 0 && setCountDown(countDown - 1);
-  //   }, 1000);
-  //   return () => {
-  //     clearInterval(myInterval);
-  //   };
-  // }, [countDown]);
-
   useEffect(() => {
-    countDown !== 0 && winner === "X" && dispatch(firstPlayerScore());
-    countDown !== 0 && winner === "O" && dispatch(secondPlayerScore());
-    if (countDown === 0 && nextPlayer && !winner && piecesCollector !== 9) {
+    if (winner === "X") {
+      setIsDisabled(true);
+      dispatch(firstPlayerScore());
+    } 
+    if (winner === "O") {
+      setIsDisabled(true);
       dispatch(secondPlayerScore());
     }
-    if (countDown === 0 && !nextPlayer && !winner && piecesCollector !== 9) {
+    if (
+      timer === 0 &&
+      nextPlayer &&
+      winner !== undefined &&
+      piecesCollector !== 9
+    ) {
+      setIsDisabled(true);
+      dispatch(secondPlayerScore());
+    } else if (
+      timer === 0 &&
+      !nextPlayer &&
+      winner !== undefined &&
+      piecesCollector !== 9
+    ) {
+      setIsDisabled(true);
       dispatch(firstPlayerScore());
     }
-  }, [nextPlayer, countDown, dispatch, winner, piecesCollector]);
+    // eslint-disable-next-line
+  }, [nextPlayer,dispatch]);
 
   useEffect(() => {
-    (winner === "X" || winner === "O") && setCountDown(0);
-    ((piecesCollector === 9 &&
+    (winner === "X" || winner === "O") && setIsDisabled(true);
+    if (
+      piecesCollector === 9 &&
       winner !== "X" &&
       winner !== "O" &&
-      winner !== "X") ||
-      (piecesCollector === 9 &&
-        winner !== "X" &&
-        winner !== "O" &&
-        winner !== "O")) &&
-      setCountDown(0);
+      piecesCollector === 9 &&
+      winner !== "X" &&
+      winner !== "O"
+    ) {
+      setIsDisabled(true);
+    }
   }, [winner, piecesCollector]);
 
   function calculateWinner(square: any) {
@@ -113,7 +130,11 @@ export default function StartedGame() {
     return (
       <button
         className="cell"
-        disabled={countDown === 0}
+        disabled={
+          (firstPlayer.length === 0 && secondPlayer.length === 0) ||
+          timer === 0 ||
+          isDisabled
+        }
         key={i}
         onClick={() => {
           dispatch(isNext());
@@ -189,14 +210,14 @@ export default function StartedGame() {
     if (winner === "O") {
       return <p className="player-to-play">{secondPlayer} won</p>;
     }
-    if (countDown !== 0) {
+    if (timer !== 0) {
       return (
         <p className="player-to-play">
           {nextPlayer ? secondPlayer : firstPlayer}’s turn
         </p>
       );
     }
-    if (countDown === 0 && winner !== "X" && winner !== "O") {
+    if (timer === 0 && winner !== "X" && winner !== "O") {
       return (
         <p className="player-to-play">
           Time out - {nextPlayer ? secondPlayer : firstPlayer} won
@@ -215,7 +236,8 @@ export default function StartedGame() {
       if (
         secondPlayer.length === 0 &&
         squares.filter(Boolean).length % 2 !== 0 &&
-        winner === undefined
+        winner === undefined &&
+        firstPlayer.length > 0
       ) {
         selectCell(indexToPut);
         dispatch(isNext());
@@ -226,7 +248,8 @@ export default function StartedGame() {
       if (
         firstPlayer.length === 0 &&
         squares.filter(Boolean).length % 2 === 0 &&
-        winner === undefined
+        winner === undefined &&
+        secondPlayer.length > 0
       ) {
         selectCell(indexToPut);
         dispatch(isNext());
@@ -242,6 +265,20 @@ export default function StartedGame() {
     firstPlayer,
   ]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (
+        firstPlayer.length === 0 &&
+        secondPlayer.length === 0 &&
+        winner === undefined
+      ) {
+        selectCell(indexToPut);
+        dispatch(isNext());
+      }
+    }, 1000);
+    // eslint-disable-next-line
+  }, [squares, winner, dispatch]);
+
   return (
     <div className="started-wrapper">
       {textToDisplay()}
@@ -256,8 +293,8 @@ export default function StartedGame() {
           className={`draw-line ${drawLine()}`}
         ></div>
       </div>
-      {countDown > 0 ? (
-        <p className="remaining-time">time left: {countDown}s</p>
+      {!isDisabled ? (
+        <RenderTimer />
       ) : (
         <button onClick={replay} className="start-button restart">
           Restart
