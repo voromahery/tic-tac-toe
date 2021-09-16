@@ -204,23 +204,50 @@ export default function StartedGame() {
     if (piecesCollector === 9 && winner !== "X" && winner !== "O") {
       return <p className="player-to-play">Draw!</p>;
     }
-    if (winner === "X") {
+    if (winner === "X" && firstPlayer.length === 0) {
+      return <p className="player-to-play">X won</p>;
+    }
+    if (winner === "O" && secondPlayer.length === 0) {
+      return <p className="player-to-play">O won</p>;
+    }
+    if (winner === "X" && firstPlayer.length > 0) {
       return <p className="player-to-play">{firstPlayer} won</p>;
     }
-    if (winner === "O") {
+    if (winner === "O" && secondPlayer.length > 0) {
       return <p className="player-to-play">{secondPlayer} won</p>;
-    }
-    if (timer !== 0) {
-      return (
-        <p className="player-to-play">
-          {nextPlayer ? secondPlayer : firstPlayer}’s turn
-        </p>
-      );
     }
     if (timer === 0 && winner !== "X" && winner !== "O") {
       return (
         <p className="player-to-play">
           Time out - {nextPlayer ? secondPlayer : firstPlayer} won
+        </p>
+      );
+    }
+    if ((secondPlayer.length === 0 && firstPlayer.length === 0) && timer !==0 ){
+      return (
+        <p className="player-to-play">
+          {nextPlayer ? 'O' : 'X'}’s turn
+        </p>
+      );
+    }
+    if(firstPlayer.length === 0 && timer !== 0){
+      return (
+        <p className="player-to-play">
+          {nextPlayer ? 'X' : secondPlayer}’s turn
+        </p>
+      );
+    }
+    if(secondPlayer.length === 0 && timer !== 0){
+      return (
+        <p className="player-to-play">
+          {nextPlayer ? 'O' : firstPlayer}’s turn
+        </p>
+      );
+    }
+    if (timer !== 0) {
+      return (
+        <p className="player-to-play">
+          {nextPlayer ? secondPlayer : firstPlayer}’s turn
         </p>
       );
     }
