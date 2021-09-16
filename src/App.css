@@ -1,6 +1,15 @@
+@font-face {
+  font-family: 'usuazi-hosomozi';
+  src: url('./fonts/usuazi-hosomozi.woff2'), url('./fonts/usuazi-hosomozi.woff');
+  font-weight: 400;
+}
+
 body {
-  font-family: "Usuazi Hosomozi", Arial, Helvetica, sans-serif;
   background-color: #ffffff;
+}
+
+body * {
+  font-family: "usuazi-hosomozi", Arial, Helvetica, sans-serif;
 }
 
 body,
