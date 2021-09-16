@@ -1,5 +1,4 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import counterReducer from "../features/counter/counterSlice";
 import startReducer from "../features/startScreenSlice";
 import addFirstPlayerReducer from "../features/addFirstPlayerSlice";
 import secondPlayerReducer from "../features/addSecondPlayerSlice";
@@ -8,7 +7,6 @@ import nextPlayerReducer from "../features/nextPlayerSlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     start: startReducer,
     addFirstPlayer: addFirstPlayerReducer,
     secondPlayer: secondPlayerReducer,

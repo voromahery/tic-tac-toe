@@ -20,18 +20,20 @@ export default function StartedGame() {
   const secondPlayer = useAppSelector(newSecondPlayer);
   const timer = useAppSelector(gameTimer);
   const nextPlayer = useAppSelector(next);
+
   const [isDisabled, setIsDisabled] = useState(false);
   const [countDown, setCountDown] = useState(timer);
   const [squares, setSquares] = React.useState(Array(9).fill(null));
-
+  const winner = calculateWinner(squares);
+  // Pieces to display when the cell is clicked
   const circlePiece = <img src={circle} alt="circle" />;
   const crossPiece = <img src={cross} alt="cross" />;
 
+  // Checking the available cell
   const piecesCollector: number = squares.filter(
     (item) => item !== null
   ).length;
 
-  const winner = calculateWinner(squares);
   const changeValueIntoNumber = squares.map((item, index) => {
     return item === null ? index : item;
   });
@@ -48,6 +50,7 @@ export default function StartedGame() {
     return squares.filter(Boolean).length % 2 === 0 ? "X" : "O";
   }
 
+  // Running the timer
   useEffect(() => {
     let myInterval = setInterval(() => {
       countDown > 0 && setCountDown(countDown - 1);
@@ -57,11 +60,21 @@ export default function StartedGame() {
 
   // Add Scores and disabled the cell
   useEffect(() => {
-    if (countDown === 0 && nextPlayer && (winner !== 'X' || winner !=='O') && piecesCollector !== 9) {
+    if (
+      countDown === 0 &&
+      nextPlayer &&
+      (winner !== "X" || winner !== "O") &&
+      piecesCollector !== 9
+    ) {
       setIsDisabled(true);
       dispatch(secondPlayerScore());
     }
-    if ((countDown === 0 && !nextPlayer && (winner !== 'X' || winner !=='O') && piecesCollector !== 9)) {
+    if (
+      countDown === 0 &&
+      !nextPlayer &&
+      (winner !== "X" || winner !== "O") &&
+      piecesCollector !== 9
+    ) {
       setIsDisabled(true);
       dispatch(firstPlayerScore());
     }
@@ -75,23 +88,6 @@ export default function StartedGame() {
     }
     // eslint-disable-next-line
   }, [nextPlayer, dispatch]);
-
-  useEffect(() => {
-    (winner === "X" || winner === "O") && setIsDisabled(true);
-    if (
-      piecesCollector === 9 &&
-      winner !== "X" &&
-      winner !== "O" &&
-      piecesCollector === 9 &&
-      winner !== "X" &&
-      winner !== "O"
-    ) {
-      setIsDisabled(true);
-    }
-    if (countDown === 0) {
-      setIsDisabled(true);
-    }
-  }, [winner, piecesCollector, countDown]);
 
   function calculateWinner(square: any) {
     const possibility = [
@@ -112,6 +108,24 @@ export default function StartedGame() {
     }
   }
 
+  // Checking whether the game is draw or not
+  useEffect(() => {
+    (winner === "X" || winner === "O") && setIsDisabled(true);
+    if (
+      piecesCollector === 9 &&
+      winner !== "X" &&
+      winner !== "O" &&
+      piecesCollector === 9 &&
+      winner !== "X" &&
+      winner !== "O"
+    ) {
+      setIsDisabled(true);
+    }
+    if (countDown === 0) {
+      setIsDisabled(true);
+    }
+  }, [winner, piecesCollector, countDown]);
+
   const selectCell = useCallback(
     (square: number) => {
       const squaresCopy = [...squares];
@@ -128,7 +142,8 @@ export default function StartedGame() {
         disabled={
           (firstPlayer.length === 0 && secondPlayer.length === 0) ||
           countDown === 0 ||
-          isDisabled
+          isDisabled ||
+          squares[i]
         }
         key={i}
         onClick={() => {
@@ -214,7 +229,7 @@ export default function StartedGame() {
     if (countDown === 0 && winner !== "X" && winner !== "O") {
       return (
         <p className="player-to-play">
-          Time out - {nextPlayer ? secondPlayer || 'O' : firstPlayer || 'X'} won
+          Time out - {nextPlayer ? secondPlayer || "O" : firstPlayer || "X"} won
         </p>
       );
     }
