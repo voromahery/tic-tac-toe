@@ -23,10 +23,10 @@ export const addFirstPlayerSlice = createSlice({
     firstPlayerScore: (state) => {
       state.score += 1;
     },
-    addNewFirstPlayer: (state, action: PayloadAction<string>) => {
+    setNewFirstPlayer: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
-    addFirstPlayerScore: (state, action: PayloadAction<number>) => {
+    setFirstPlayerScore: (state, action: PayloadAction<number>) => {
       state.score = action.payload;
     },
   },
@@ -34,9 +34,9 @@ export const addFirstPlayerSlice = createSlice({
 
 export const {
   addFirstPlayer,
-  addNewFirstPlayer,
+  setNewFirstPlayer,
   firstPlayerScore,
-  addFirstPlayerScore,
+  setFirstPlayerScore,
 } = addFirstPlayerSlice.actions;
 
 export const newFirstPlayer = (state: RootState) => state.addFirstPlayer.value;

@@ -5,22 +5,22 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   start,
   extraFeature,
-  addExtraFeature,
+  setExtraFeature,
 } from "../features/startScreenSlice";
 import {
-  addNewFirstPlayer,
+  setNewFirstPlayer,
   newFirstPlayer,
   newFirstPlayerScore,
-  addFirstPlayerScore,
+  setFirstPlayerScore,
 } from "../features/addFirstPlayerSlice";
 import {
   newSecondPlayer,
-  addSecondPlayer,
+  setSecondPlayer,
   newSecondPlayerScore,
-  addSecondPlayerScore,
+  setSecondPlayerScore,
 } from "../features/addSecondPlayerSlice";
 
-import { addTimer, gameTimer } from "../features/timerSlice";
+import { setTimer, gameTimer } from "../features/timerSlice";
 export default function Home() {
   const dispatch = useAppDispatch();
   const firstPlayer = useAppSelector(newFirstPlayer);
@@ -36,12 +36,12 @@ export default function Home() {
   ];
 
   function rebootGame() {
-    dispatch(addTimer(3));
-    dispatch(addNewFirstPlayer(""));
-    dispatch(addSecondPlayer(""));
-    dispatch(addExtraFeature(false));
-    dispatch(addFirstPlayerScore(0));
-    dispatch(addSecondPlayerScore(0));
+    dispatch(setTimer(3));
+    dispatch(setNewFirstPlayer(""));
+    dispatch(setSecondPlayer(""));
+    dispatch(setExtraFeature(false));
+    dispatch(setFirstPlayerScore(0));
+    dispatch(setSecondPlayerScore(0));
   }
 
   return (
@@ -53,7 +53,7 @@ export default function Home() {
             type="text"
             placeholder="leave empty to use AI or enter player name"
             value={firstPlayer}
-            onChange={(e) => dispatch(addNewFirstPlayer(e.target.value))}
+            onChange={(e) => dispatch(setNewFirstPlayer(e.target.value))}
             name="first player name"
           />
         ) : (
@@ -70,7 +70,7 @@ export default function Home() {
             type="text"
             placeholder="leave empty to use AI or enter player name"
             value={secondPlayer}
-            onChange={(e) => dispatch(addSecondPlayer(e.target.value))}
+            onChange={(e) => dispatch(setSecondPlayer(e.target.value))}
             name="second player name"
           />
         ) : (
@@ -89,7 +89,7 @@ export default function Home() {
               name="time-limit"
               min={3}
               max={60}
-              onChange={(e) => dispatch(addTimer(Number(e.target.value)))}
+              onChange={(e) => dispatch(setTimer(Number(e.target.value)))}
               placeholder={`${timer}s`}
             />
           </>

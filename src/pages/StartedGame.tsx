@@ -9,8 +9,8 @@ import {
   secondPlayerScore,
 } from "../features/addSecondPlayerSlice";
 import { gameTimer } from "../features/timerSlice";
-import { start, addExtraFeature } from "../features/startScreenSlice";
-import { next, isNext, addNextPlayer } from "../features/nextPlayerSlice";
+import { start, setExtraFeature } from "../features/startScreenSlice";
+import { next, isNext, setNextPlayer } from "../features/nextPlayerSlice";
 import cross from "../images/cross.svg";
 import circle from "../images/circle.svg";
 
@@ -265,8 +265,8 @@ export default function StartedGame() {
 
   function replay() {
     dispatch(start());
-    dispatch(addExtraFeature(true));
-    dispatch(addNextPlayer(false));
+    dispatch(setExtraFeature(true));
+    dispatch(setNextPlayer(false));
   }
 
   useEffect(() => {

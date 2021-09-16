@@ -23,16 +23,16 @@ export const startSlice = createSlice({
     displayExtraFeature: (state) => {
       state.value = state.displayExtraFeature;
     },
-    startScreen: (state, action: PayloadAction<boolean>) => {
+    setStartScreen: (state, action: PayloadAction<boolean>) => {
       state.value = action.payload;
     },
-    addExtraFeature: (state, action: PayloadAction<boolean>) => {
+    setExtraFeature: (state, action: PayloadAction<boolean>) => {
       state.displayExtraFeature = action.payload;
     },
   },
 });
 
-export const { start, startScreen, displayExtraFeature, addExtraFeature } = startSlice.actions;
+export const { start, setStartScreen, displayExtraFeature, setExtraFeature } = startSlice.actions;
 
 export const startGame = (state: RootState) => state.start.value;
 

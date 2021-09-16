@@ -11,21 +11,21 @@ const initialState: StartState = {
   status: "add-timer",
 };
 
-export const addTimerSlice = createSlice({
+export const setTimerSlice = createSlice({
   name: "add-timer",
   initialState,
   reducers: {
     timer: (state) => {
       state.value = 3;
     },
-    addTimer: (state, action: PayloadAction<number>) => {
+    setTimer: (state, action: PayloadAction<number>) => {
       state.value = action.payload;
     },
   },
 });
 
-export const { timer, addTimer } = addTimerSlice.actions;
+export const { timer, setTimer } = setTimerSlice.actions;
 
 export const gameTimer = (state: RootState) => state.timer.value;
 
-export default addTimerSlice.reducer;
+export default setTimerSlice.reducer;
