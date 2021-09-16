@@ -63,15 +63,15 @@ export default function StartedGame() {
     if (
       countDown === 0 &&
       nextPlayer &&
-      (winner !== "X" && winner !== "O") &&
+      (winner === undefined) &&
       piecesCollector !== 9
     ) {
       setIsDisabled(true);
       dispatch(secondPlayerScore());
-    } if (
+    } else if (
       countDown === 0 &&
       !nextPlayer &&
-      (winner !== "X" && winner !== "O") &&
+      (winner === undefined) &&
       piecesCollector !== 9
     ) {
       setIsDisabled(true);
