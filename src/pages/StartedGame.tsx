@@ -30,6 +30,8 @@ export default function StartedGame() {
   const crossPiece = <img src={cross} alt="cross" />;
 
   // Checking the available cell
+
+  // functions below should be extracted to utils
   const piecesCollector: number = squares.filter(
     (item) => item !== null
   ).length;
@@ -88,7 +90,7 @@ export default function StartedGame() {
     
     // eslint-disable-next-line
   }, [nextPlayer, dispatch]);
-
+// missing type sqare
   function calculateWinner(square: any) {
     const possibility = [
       [0, 1, 2],
@@ -109,9 +111,11 @@ export default function StartedGame() {
   }
 
   // Checking whether the game is draw or not
+  // X and O should be an enum
   useEffect(() => {
     (winner === "X" || winner === "O") && setIsDisabled(true);
     if (
+      // 9 should be a constant stored in utils or somewhere
       piecesCollector === 9 &&
       winner !== "X" &&
       winner !== "O" &&
@@ -160,9 +164,10 @@ export default function StartedGame() {
       </button>
     );
   }
-
+// should be extracted to utils, squares passed as a parameter (pure function)
   function drawLine() {
     const top =
+    // xxx and 000 should be a const made of enums ex. const xLine = [MARK.X, MARK.X, MARK.X].join('')
       [squares[0], squares[1], squares[2]].join("") === "XXX" ||
       [squares[0], squares[1], squares[2]].join("") === "OOO";
     const center =
@@ -187,6 +192,7 @@ export default function StartedGame() {
       [squares[2], squares[5], squares[8]].join("") === "XXX" ||
       [squares[2], squares[5], squares[8]].join("") === "OOO";
 
+    // all those strings of possible wins should be an enum and function return defined as an enum type
     if (top) {
       return "top-draw";
     }
@@ -212,7 +218,7 @@ export default function StartedGame() {
       return "vertical-right-draw";
     }
   }
-
+// should be extracted to utils, app info passed as a parameter (pure function)  return type string
   function textToDisplay() {
     if (piecesCollector === 9 && winner !== "X" && winner !== "O") {
       return <p className="player-to-play">Draw!</p>;
@@ -273,6 +279,7 @@ export default function StartedGame() {
   }
 
   useEffect(() => {
+    // should be refactored to DRY a lot of duplication
     setTimeout(() => {
       if (
         secondPlayer.length === 0 &&

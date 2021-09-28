@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
 export interface StartState {
+  // status unused ???
   status: "start";
   value: boolean;
   displayExtraFeature: boolean
@@ -20,6 +21,7 @@ export const startSlice = createSlice({
     start: (state) => {
       state.value = !state.value;
     },
+    // what is this action for - looks unused
     displayExtraFeature: (state) => {
       state.value = state.displayExtraFeature;
     },
