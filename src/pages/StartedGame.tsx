@@ -120,11 +120,14 @@ export default function StartedGame() {
       winner !== "O"
     ) {
       setIsDisabled(true);
+      dispatch(secondPlayerScore());
+      dispatch(firstPlayerScore());
     }
     if (countDown === 0) {
       setIsDisabled(true);
     }
-  }, [winner, piecesCollector, countDown]);
+    // eslint-disable-next-line
+  }, [winner, piecesCollector, dispatch]);
 
   const selectCell = useCallback(
     (square: number) => {
