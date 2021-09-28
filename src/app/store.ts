@@ -8,6 +8,7 @@ import nextPlayerReducer from "../features/nextPlayerSlice";
 export const store = configureStore({
   reducer: {
     start: startReducer,
+    // there should be one slice for players X and O a lot of duplication
     firstPlayer: addFirstPlayerReducer,
     secondPlayer: secondPlayerReducer,
     timer: timerReducer,

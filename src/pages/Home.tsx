@@ -29,13 +29,14 @@ export default function Home() {
   const displayPlayerStatus = useAppSelector(extraFeature);
   const firstPlayerScores = useAppSelector(newFirstPlayerScore);
   const secondPlayerScores = useAppSelector(newSecondPlayerScore);
-
+// players 's'
   const player: { player: string; score: number }[] = [
     { player: firstPlayer, score: firstPlayerScores },
     { player: secondPlayer, score: secondPlayerScores },
   ];
 
   function rebootGame() {
+    // all default valus should be stored as a const somewhere in separate file 
     dispatch(setTimer(3));
     dispatch(setNewFirstPlayer(""));
     dispatch(setSecondPlayer(""));

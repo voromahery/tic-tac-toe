@@ -3,6 +3,7 @@ import { RootState } from "../app/store";
 
 export interface StartState {
   value: number;
+  // status looks not used - remove
   status: "add-timer";
 }
 
@@ -15,6 +16,7 @@ export const setTimerSlice = createSlice({
   name: "add-timer",
   initialState,
   reducers: {
+    // dont see this action ever user - remove 
     timer: (state) => {
       state.value = 3;
     },

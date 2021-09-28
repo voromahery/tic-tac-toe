@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
-
+// there should be one slice for players X and O a lot of duplication
 export interface StartState {
   value: string;
   score: number;

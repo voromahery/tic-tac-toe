@@ -1,15 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
 
+// file name incorrect 
 export interface StartState {
   value: string;
   score: number;
+  // status unused ???
   status: "add-second-player";
 }
 
 const initialState: StartState = {
   value: "",
   score: 0,
+  // status unused ???
   status: "add-second-player",
 };
 
@@ -17,9 +20,11 @@ export const secondPlayerSlice = createSlice({
   name: "add-second-player",
   initialState,
   reducers: {
+    // unused ???
     secondPlayer: (state) => {
       state.value = "KEN KANEKI";
     },
+    // this is an action name should be incrementSecondPlayerScore 
     secondPlayerScore: (state) => {
       state.score += 1;
     },
