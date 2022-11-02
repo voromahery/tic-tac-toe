@@ -35,7 +35,7 @@
 
 Tic Tac Toe is a board game that can be played with 2 people competing against to each other. Each person has a piece whether cross (X) or circle (O). The goal is to get three of your pieces aligned (eg: XXX or OOO), horizontally or vertically or diagonally.
 
-By building this application, I learned to use Redux toolkit and it helped me a lot to be confident with React and typeScript.
+By building this application, I learned to use Redux toolkit and it helped me a lot to be confident with React and TypeScript.
 
 ## [Built With](#built-with)
 
